@@ -1,0 +1,16 @@
+{
+    "links": [
+        { 
+            "name": "Recipes",
+            "url": "/recipes"
+        },
+        { 
+            "name": "Posts",
+            "url": "/posts"
+        },
+        { 
+            "name": "Groups",
+            "url": "/groups"
+        }
+    ]
+}

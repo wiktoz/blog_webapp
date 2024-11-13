@@ -2,9 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fff8e4;
+  --background-secondary: #f87b4a;
+  --text: #2f2f2f;
+  --text-secondary: #666666;
+  --round: 18px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -15,7 +20,27 @@
 }
 
 body {
-  color: var(--foreground);
+  color: var(--text);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  margin: 1em;
+}
+
+.bg-secondary {
+  background: var(--background-secondary);
+  color: #fff;
+  border-radius: var(--round);
+}
+
+.text-secondary {
+  color: var(--text-secondary);
+}
+
+.header {
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 900;
+  font-style: normal;
+  font-size: 4em;
 }
