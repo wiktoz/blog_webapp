@@ -9,7 +9,7 @@
   --background-secondary: #f87b4a;
   --text: #2f2f2f;
   --text-secondary: #666666;
-  --round: 18px;
+  --round: 0.5rem;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -37,10 +37,23 @@ body {
   color: var(--text-secondary);
 }
 
+.round {
+  border-radius: var(--round);
+}
+
 .header {
   font-family: "Playfair Display", serif;
   font-optical-sizing: auto;
   font-weight: 900;
   font-style: normal;
-  font-size: 4em;
+  font-size: 3em;
+}
+
+.divider {
+  height: 0.5px;
+  border-radius: 30px;
+  width: 95%;
+  background-color: var(--text);
+  margin: 2em auto;
+  padding: 0 1em;
 }
