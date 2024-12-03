@@ -7,9 +7,9 @@ interface InputInterface {
     value?: string,
     autoComplete?: string,
     errors?: { [key: string]: { message?: string } },
-    register?: UseFormRegister<any>,
+    register?: UseFormRegister<>,
     setter?: (value: string) => void,
-    setValue?: UseFormSetValue<any>
+    setValue?: UseFormSetValue<>
 }
 
 interface ButtonInterface {

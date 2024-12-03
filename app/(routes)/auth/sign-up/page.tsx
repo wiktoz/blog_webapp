@@ -1,5 +1,6 @@
 'use client'
 
+import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
@@ -8,6 +9,8 @@ import Input from "@/app/components/form/Input"
 import Button from "@/app/components/form/Button"
 
 const SignUp = () => {
+    const router = useRouter()
+
     const {
         register,
         handleSubmit,
@@ -28,11 +31,11 @@ const SignUp = () => {
             body: JSON.stringify(data)
         })
 
-        console.log(res.status)
-
         const resData = await res.json()
 
-        console.log(resData)
+        if(res.status === 200) {
+            return router.push("/user/profile")
+        }
 
         setError("password", { type: 'custom', message: resData.message })
 

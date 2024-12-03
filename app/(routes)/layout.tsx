@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
-import "./globals.css"
-import Navbar from "./components/Navbar";
+import "../globals.css"
+import Navbar from "@/app/components/Navbar"
 
 export const metadata: Metadata = {
   title: "Ania Gotuje",
@@ -10,11 +10,11 @@ export const metadata: Metadata = {
 export default function RootLayout({children}: Readonly<{children: React.ReactNode}>) {
   return (
     <html lang="en">
-      <body>
+      <body className="bg-primary">
         <header>
           <Navbar/>
         </header>
-        <main>
+        <main className="m-8">
           {children}
         </main>
       </body>

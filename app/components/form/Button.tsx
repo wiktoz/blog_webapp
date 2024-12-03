@@ -4,7 +4,7 @@ import Spinner from "../Spinner"
 
 const Button = ({title, loading, click}:ButtonInterface) => {
     return (
-        <div className="bg-secondary py-2 px-6 font-semibold text-center my-4 flex justify-center items-center gap-1 hover:cursor-pointer"
+        <div className="bg-secondary py-2 px-6 font-semibold text-center flex justify-center items-center gap-1 hover:cursor-pointer"
             onClick={() => click()}
         >
             {

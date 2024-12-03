@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Faculty+Glyphic&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 
 :root {
   --background: #fff8e4;
@@ -21,10 +21,12 @@
 
 body {
   color: var(--text);
-  background: var(--background);
-  font-family: "Open Sans", sans-serif;
   font-size: 14px;
-  margin: 1em;
+  font-weight: 300;
+}
+
+.bg-primary {
+  background: var(--background);
 }
 
 .bg-secondary {
@@ -46,7 +48,7 @@ body {
   font-optical-sizing: auto;
   font-weight: 900;
   font-style: normal;
-  font-size: 3em;
+  font-size: 2em;
 }
 
 .divider {

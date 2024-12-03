@@ -6,8 +6,11 @@ import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { SignInSchema } from "@/app/validation/auth"
 import { useState } from 'react'
+import { useRouter } from "next/navigation"
 
 const SignIn = () => {
+    const router = useRouter()
+
     const {
         register,
         handleSubmit,
@@ -28,11 +31,11 @@ const SignIn = () => {
             body: JSON.stringify(data)
         })
 
-        console.log(res.status)
-
         const resData = await res.json()
 
-        console.log(resData)
+        if(res.status === 200) {
+            return router.push("/user/profile")
+        }
 
         setError("password", { type: 'custom', message: resData.message })
 
