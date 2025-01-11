@@ -18,8 +18,11 @@ const UserPage = () => {
                 
                 <div className="flex flex-col justify-center">
                     <div className="flex flex-col md:flex-row gap-10 justify-center">
-                        <div className="flex flex-col justify-between">
-                            <div className="header">
+                        <div className="md:hidden mx-auto">
+                            <Image src="/img/ill.png" width={350} height={200} alt="Cook Photo"/>
+                        </div>
+                        <div className="flex flex-col justify-between py-4">
+                            <div className="text-2xl font-bold">
                                 Hi, {user.name} {user.surname}
                             </div>
                             <div className="flex flex-col gap-1 my-4">
@@ -39,7 +42,7 @@ const UserPage = () => {
                                 <Button title="Browse Groups" click={() => router.push("/groups")} loading={false}/>
                             </div>
                         </div>
-                        <div>
+                        <div className="hidden md:block">
                             <Image src="/img/ill.png" width={350} height={200} alt="Cook Photo"/>
                         </div>
                     </div>

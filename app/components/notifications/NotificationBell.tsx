@@ -1,32 +1,40 @@
 import { EnvelopeIcon, EnvelopeOpenIcon, BellIcon } from "@heroicons/react/24/outline"
-import { useState } from "react"
-import { formatDistanceToNow } from "date-fns"
+import { useState, useEffect, useRef } from "react"
 import api from "@/app/utils/api"
 import useSWR from "swr"
 import { fetcher } from "@/app/utils/fetcher"
+import { timeAgo } from "@/app/utils/helpers"
 
-const timeAgo = (dateString:string) => {
-    const date = new Date(dateString); // Parse the date string
-    if (isNaN(date.getTime())) {
-      return <span>Invalid date</span>; // Handle invalid dates
-    }
 
-    const gmtPlusOneDate = new Date(date.getTime() - 1 * 60 * 60 * 1000);
-  
-    return (
-      <span>{formatDistanceToNow(gmtPlusOneDate, { addSuffix: true })}</span>
-    );
-  }
 
 const NotificationBell = () => {
     const { data: notifications, error: notificationsError, isLoading: notificationsLoading, mutate } = useSWR<NotificationResponseInterface[]>("/api/notifications/me", fetcher)
 
     const [isOpen, setIsOpen] = useState<boolean>(false)
+    const dropdownRef = useRef<HTMLDivElement>(null)
+    const buttonRef = useRef<HTMLDivElement>(null)
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            // If the click is outside the dropdown and not on the button, close the dropdown
+            if (
+              dropdownRef.current &&
+              !dropdownRef.current.contains(event.target as Node) &&
+              buttonRef.current &&
+              !buttonRef.current.contains(event.target as Node)
+            ) {
+              setIsOpen(false);
+            }
+          };
+      
+          document.addEventListener('click', handleClickOutside);
+          return () => {
+            document.removeEventListener('click', handleClickOutside);
+          };
+      }, [])
 
     const changeNotificationStatus = async (notificationId:number, status:boolean) => {
-        console.log(notificationId)
-
-        const response = await api.post("/api/notifications/read", {
+        await api.post("/api/notifications/read", {
             notification_id: notificationId,
             viewed: status
         }, {
@@ -54,8 +62,8 @@ const NotificationBell = () => {
     return(
         <div>
             <div className="relative">
-                <div onClick={() => setIsOpen(!isOpen)} className="cursor-pointer">
-                    <BellIcon width={24} height={24}/>
+                <div onClick={() => setIsOpen(!isOpen)} className="cursor-pointer" ref={buttonRef}>
+                    <BellIcon width={20} height={20}/>
                 </div>
 
                 {
@@ -67,12 +75,12 @@ const NotificationBell = () => {
 
                 {
                     isOpen && 
-                    <div className="absolute right-0 mt-2 w-72 border border-gray-500 rounded-lg">
+                    <div className="absolute right-0 mt-2 w-72 border border-gray-500 rounded-lg bg-[#fffbef]" ref={dropdownRef}>
                         <div>
                         {
                             notifications && notifications.length > 0 ? notifications.map((notification:NotificationResponseInterface) => {
                                 return(
-                                    <div key={notification.notification_id} className="hover:bg-orange-300 hover:bg-opacity-20 p-3 cursor-pointer rounded-lg">
+                                    <div key={notification.notification_id} className="p-3 cursor-pointer rounded-lg">
                                         <div className="flex flex-row gap-3 items-center">
                                             <div>
                                                 <div className="bg-[#f87b4a] p-2 rounded-full text-white">
@@ -85,7 +93,7 @@ const NotificationBell = () => {
                                                 }
                                                 </div>
                                             </div>
-                                            <div>
+                                            <div className="hover:opacity-70">
                                                 {
                                                     notification.viewed ?
                                                     <div className="font-semibold">Read</div>

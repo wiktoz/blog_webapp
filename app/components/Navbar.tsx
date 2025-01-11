@@ -5,12 +5,45 @@ import Image from "next/image"
 import Link from "next/link"
 import navbar from '@/app/config/navbar.json'
 import { fetcher } from "@/app/utils/fetcher"
-import { UserIcon } from "@heroicons/react/24/outline"
+import { UserIcon, ArrowRightStartOnRectangleIcon } from "@heroicons/react/24/outline"
 import Spinner from "@/app/components/Spinner"
 import NotificationBell from "@/app/components/notifications/NotificationBell"
+import api from "@/app/utils/api"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
 
 const Navbar = () => {
-    const { data: user, error: userError, isLoading: userLoading } = useSWR<UserMeResponseInterface>("/api/users/me", fetcher)
+    const router = useRouter()
+    const { data: user, error: userError, isLoading: userLoading, mutate } = useSWR<UserMeResponseInterface>("/api/users/me", fetcher)
+    const [isLoggingOut, setIsLoggingOut] = useState<boolean>(false)
+
+    const logout = async () => {
+        setIsLoggingOut(true)
+
+        await api.post("/api/auth/token/revoke/rtoken",  {}, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(async () => {
+            await api.post("/api/auth/token/revoke/atoken",  {}, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).catch(err => {
+                console.log(err)
+            })
+        })
+        .catch(err => {
+            console.log(err)
+        })
+        .finally(async () => {
+            await mutate(undefined, { revalidate: true })
+            setIsLoggingOut(false)
+            return router.push("/auth/sign-in")
+        })
+        
+    }
 
     return (
         <nav className="flex flex-row justify-between px-6 py-2 bg-primary">
@@ -32,35 +65,47 @@ const Navbar = () => {
                     }
                 </div>
             </div>
+            <div className="flex flex-row items-center gap-4">
             {
+                isLoggingOut ?
+                <div className="flex flex-row items-center gap-2">
+                    Logging out
+                    <Spinner/>
+                </div>
+
+                :
                 userLoading ?
                     <Spinner/>
                 :
                 user ? 
 
-                <div className="flex flex-row items-center gap-6">
-                    <NotificationBell/>
+                <>
                     
                     <Link href={"/user/profile"}>
                         <UserIcon width={20} height={20} />
                     </Link>
-                </div>
+
+                    <ArrowRightStartOnRectangleIcon width={20} height={20} onClick={() => logout()} className="cursor-pointer"/>
+
+                    <NotificationBell/>
+                </>
 
                 :
 
-                <div className="flex flex-row items-center gap-4">
+                <>
                     <Link href="/auth/sign-in">
                         <div className="font-semibold">
                             Log In
                         </div>
                     </Link>
                     <Link href="/auth/sign-up">
-                        <div className="bg-secondary w-fit py-2 px-6 font-semibold">
+                        <div className="bg-secondary w-fit py-2 px-6 font-semibold rounded-lg">
                             Sign Up
                         </div>
                     </Link>
-                </div>
+                </>
             }
+            </div>
         </nav>
     )
 }

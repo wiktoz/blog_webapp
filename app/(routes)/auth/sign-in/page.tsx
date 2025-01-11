@@ -7,9 +7,12 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import { SignInSchema } from "@/app/validation/auth"
 import { useState } from 'react'
 import { useRouter } from "next/navigation"
+import { useSWRConfig } from "swr"
 
 const SignIn = () => {
     const router = useRouter()
+
+    const { mutate } = useSWRConfig()
 
     const {
         register,
@@ -34,6 +37,7 @@ const SignIn = () => {
         const resData = await res.json()
 
         if(res.status === 200) {
+            await mutate(() => true, undefined, { revalidate: true })
             return router.push("/user/profile")
         }
 

@@ -1,6 +1,6 @@
 import axios, { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from "axios"
 import Cookies from "js-cookie"
-import Router from "next/router"
+import { redirect } from 'next/navigation'
 
 const api: AxiosInstance = axios.create({
   baseURL: ""
@@ -44,7 +44,11 @@ api.interceptors.response.use((response: AxiosResponse): AxiosResponse => respon
       isRefreshing = true;
 
       try {
-        const refreshResponse = await axios.post("/api/auth/refresh-token")
+        const refreshResponse = await axios.post("/api/auth/token/refresh", {}, {
+          headers: {
+            "X-CSRF-Token": Cookies.get("csrf_refresh_token")
+          }
+        })
 
         if (refreshResponse.status === 200) {
           processQueue()
@@ -52,7 +56,7 @@ api.interceptors.response.use((response: AxiosResponse): AxiosResponse => respon
         }
       } catch (refreshError) {
         console.error("Token refresh failed:", refreshError)
-        Router.push("/auth/sign-in")
+        redirect("/auth/sign-in")
       } finally {
         isRefreshing = false;
       }
