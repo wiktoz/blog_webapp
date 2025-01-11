@@ -2,26 +2,14 @@
 
 import Button from "@/app/components/form/Button"
 import { useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
+import useSWR from "swr"
 import { PencilSquareIcon, LockClosedIcon } from "@heroicons/react/24/outline"
 import Image from "next/image"
+import { fetcher } from "@/app/utils/fetcher"
 
 const UserPage = () => {
     const router = useRouter()
-    const [user, setUser] = useState<UserMeResponseInterface>()
-
-    useEffect(() => {
-        fetch("/api/users/me", {
-            method: "GET",
-        })
-        .then(async (res) => {
-            const resData = await res.json()
-
-            if(res.status === 200) {
-                setUser(resData)
-            }
-        })
-    })
+    const { data: user, error, isLoading } = useSWR<UserMeResponseInterface>("/api/users/me", fetcher)
 
     return(
         <div>
@@ -52,7 +40,7 @@ const UserPage = () => {
                             </div>
                         </div>
                         <div>
-                            <Image src="/img/ill.png" width={350} height={200} alt="aaa"/>
+                            <Image src="/img/ill.png" width={350} height={200} alt="Cook Photo"/>
                         </div>
                     </div>
                 </div>

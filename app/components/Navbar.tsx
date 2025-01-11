@@ -1,26 +1,16 @@
 'use client'
 
+import useSWR from "swr"
 import Image from "next/image"
 import Link from "next/link"
-import navbar from '../config/navbar.json'
-import { useState, useEffect } from 'react'
-import { BellIcon, UserIcon } from "@heroicons/react/24/outline"
+import navbar from '@/app/config/navbar.json'
+import { fetcher } from "@/app/utils/fetcher"
+import { UserIcon } from "@heroicons/react/24/outline"
+import Spinner from "@/app/components/Spinner"
+import NotificationBell from "@/app/components/notifications/NotificationBell"
 
 const Navbar = () => {
-    const [user, setUser] = useState<UserMeResponseInterface>()
-
-    useEffect(() => {
-        fetch("/api/users/me", {
-            method: "GET",
-        })
-        .then(async (res) => {
-            const resData = await res.json()
-
-            if(res.status === 200) {
-                setUser(resData)
-            }
-        })
-    })
+    const { data: user, error: userError, isLoading: userLoading } = useSWR<UserMeResponseInterface>("/api/users/me", fetcher)
 
     return (
         <nav className="flex flex-row justify-between px-6 py-2 bg-primary">
@@ -43,11 +33,14 @@ const Navbar = () => {
                 </div>
             </div>
             {
+                userLoading ?
+                    <Spinner/>
+                :
                 user ? 
 
-                <div className="flex flex-row items-center gap-4">
-                    <BellIcon width={20} height={20} />
-
+                <div className="flex flex-row items-center gap-6">
+                    <NotificationBell/>
+                    
                     <Link href={"/user/profile"}>
                         <UserIcon width={20} height={20} />
                     </Link>
