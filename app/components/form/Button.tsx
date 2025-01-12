@@ -1,6 +1,6 @@
 import { ButtonInterface } from "@/app/interfaces/form"
 import { ArrowLongRightIcon } from "@heroicons/react/24/solid"
-import Spinner from "../Spinner"
+import Spinner from "@/app/components/Spinner"
 
 const Button = ({title, loading, click}:ButtonInterface) => {
     return (

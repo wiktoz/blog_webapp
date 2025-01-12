@@ -47,11 +47,11 @@ const SignIn = () => {
     }
 
     return (
-        <div className="flex w-1/3 flex-col mx-auto">
-            <div className="header mb-1">
+        <div className="flex md:w-1/3 flex-col rounded-lg shadow-md p-6 py-10 gap-2 bg-[#fffbef] mx-auto">
+            <div className="text-2xl font-bold">
                 Sign In
             </div>
-            <div className="text-secondary text-xs mb-4 flex w-2/3">
+            <div className="text-secondary text-xs mb-6 flex w-2/3">
                 Discover all the recipes in one click
             </div>
             <div className="flex flex-col">

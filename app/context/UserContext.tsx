@@ -33,9 +33,10 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const logout = async () => {
     setIsLoggingOut(true);
 
-    const csrfToken = Cookies.get("csrf_access_token");
+    const csrfAccessToken = Cookies.get("csrf_access_token");
+    const csrfRefreshToken = Cookies.get("csrf_refresh_token");
 
-    if (!csrfToken) {
+    if (!csrfAccessToken || !csrfRefreshToken) {
       throw new Error("CSRF token is missing");
     }
 
@@ -45,7 +46,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "X-CSRF-Token": csrfToken,
+          "X-CSRF-Token": csrfRefreshToken,
         },
       });
 
@@ -54,6 +55,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "X-CSRF-Token": csrfAccessToken,
         },
       });
 

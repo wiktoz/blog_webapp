@@ -6,10 +6,9 @@ const GroupPage = async ({params}:{params: Promise<{id: string}>}) => {
     const id = (await params).id
 
     return(
-        <div className="md:w-1/2 flex flex-col mx-auto gap-8">
+        <div className="md:w-1/2 flex flex-col mx-auto gap-16">
             <GroupDetails groupId={id} />
             <PostUpload groupId={id} />
-
             <PostsList groupId={id} />
         </div>
     )

@@ -34,7 +34,7 @@ const SignUp = () => {
         const resData = await res.json()
 
         if(res.status === 200) {
-            return router.push("/user/profile")
+            return router.push("/auth/sign-in")
         }
 
         setError("password", { type: 'custom', message: resData.message })
@@ -43,8 +43,8 @@ const SignUp = () => {
     }
 
     return (
-        <div className="flex w-1/3 flex-col mx-auto">
-            <div className="header mb-1">
+        <div className="flex md:w-1/3 flex-col rounded-lg shadow-md p-6 py-10 gap-2 bg-[#fffbef] mx-auto">
+            <div className="text-2xl font-bold">
                 Sign Up
             </div>
             <div className="text-secondary text-xs mb-4 flex w-2/3">
@@ -64,7 +64,7 @@ const SignUp = () => {
                         register={register}
                         errors={errors}
                     />
-                    <div className="divider"></div>
+                    <div className="h-px w-full bg-gray-300 rounded-full my-5"></div>
                     <Input 
                         id={"email"}
                         title={"email"}
