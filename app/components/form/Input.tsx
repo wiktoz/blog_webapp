@@ -4,7 +4,7 @@ import { InputInterface } from "@/app/interfaces/form"
 import { ExclamationCircleIcon } from "@heroicons/react/24/outline"
 import { useState } from "react"
 
-const Input = ({id, title, type, value, autoComplete, errors, register, setter}:InputInterface) => {
+const Input = ({id, title, type, value, autoComplete, placeholder, errors, register, setter}:InputInterface) => {
     const [currentValue, setCurrentValue] = useState(value ? value : "")
 
     return (
@@ -17,14 +17,15 @@ const Input = ({id, title, type, value, autoComplete, errors, register, setter}:
                 type={type ? type : "text"}
                 id={id}
                 name={id}
+                placeholder={placeholder}
                 autoComplete={autoComplete ? autoComplete : "off"}
                 value={currentValue}
-                onChange={ e => {
-                    setCurrentValue(e.target.value)
-                    if(setter) setter(e.target.value)
+                onInput={ e => {
+                    setCurrentValue((e.target as HTMLInputElement).value)
+                    if(setter) setter((e.target as HTMLInputElement).value)
                 }}
-                className={"w-full my-1 p-2 border border-gray-900 px-3 text-gray-900 text-sm rounded-lg bg-transparent " +
-                    "focus:outline-none focus:border focus:border-gray-800 block ring-0 focus:ring-0 " +
+                className={"w-full my-1 p-2 shadow px-3 text-gray-900 text-sm rounded-lg bg-primary " +
+                    "focus:outline-none focus:ring-2 focus:ring-[#f87b4a] block " +
                     (errors ? errors[id] ? "border-red-600" : "" : "")}
             />
             { 

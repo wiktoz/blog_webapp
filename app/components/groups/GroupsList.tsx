@@ -3,8 +3,7 @@ import useSWR from "swr"
 import { fetcher } from "@/app/utils/fetcher"
 import { useEffect, useState } from "react"
 
-const GroupsList = () => {
-    const { data: groups, error: groupsError, isLoading: groupsLoading } = useSWR<GroupResponseInterface[]>("/api/groups/list", fetcher)
+const GroupsList = ({groups}:{groups:GroupResponseInterface[]}) => {
     const { data: myGroups, error: myGroupsError, isLoading: myGroupsLoading, mutate } = useSWR<GroupResponseInterface[]>("/api/groups/my", fetcher)
 
     const [myGroupsIds, setMyGroupsIds] = useState<number[]>([])

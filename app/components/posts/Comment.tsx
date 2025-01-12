@@ -18,7 +18,7 @@ const Comment = ({comment}:{comment: CommentResponseInterface}) => {
                         </div>
                     </div>
                 </div>
-                <div>
+                <div className="mx-2">
                     {comment.content}
                 </div>
             </div>

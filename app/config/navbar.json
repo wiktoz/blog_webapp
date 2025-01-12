@@ -1,10 +1,6 @@
 {
     "links": [
         { 
-            "name": "Recipes",
-            "url": "/recipes"
-        },
-        { 
             "name": "Posts",
             "url": "/posts"
         },

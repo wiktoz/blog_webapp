@@ -6,6 +6,7 @@ interface InputInterface {
     type?: string,
     value?: string,
     autoComplete?: string,
+    placeholder?: string,
     errors?: { [key: string]: { message?: string } },
     register?: UseFormRegister<>,
     setter?: (value: string) => void,

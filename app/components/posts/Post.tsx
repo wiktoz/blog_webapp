@@ -5,6 +5,9 @@ import { useState } from "react"
 import useSWR from "swr"
 import Comment from "./Comment"
 import { AnimatePresence, motion } from "framer-motion"
+import Image from "next/image"
+import Carousel from "../Carousel"
+import Input from "../form/Input"
 
 const Post = ({post}:{post:PostResponseInterface}) => {
     const [commentsOpen, setCommentsOpen] = useState<boolean>(false)
@@ -14,8 +17,8 @@ const Post = ({post}:{post:PostResponseInterface}) => {
     return(
         <div className="">
             <div className="flex flex-col rounded-lg shadow-md p-6 gap-4 bg-[#fffbef]">
-                <div className="flex gap-1.5 items-center w-fit">
-                    <div className=" rounded-full">
+                <div className="flex gap-2 items-center w-fit">
+                    <div className="bg-secondary rounded-full">
                         <UserCircleIcon width={36} height={36} strokeWidth={1}/>
                     </div>
                     <div className="flex flex-col">
@@ -27,8 +30,15 @@ const Post = ({post}:{post:PostResponseInterface}) => {
                         </div>
                     </div>
                 </div>
-                <div>
-                    {post.content}
+                <div className="my-2">
+                    <div className="mb-4">
+                        <p className="font-semibold text-lg">{post.title}</p>
+                        <p>{post.content}</p>
+                    </div>
+                    {
+                        post.photos.length > 0 &&
+                        <Carousel items={post.photos.map(photo => `data:image/jpeg;base64,${photo}`)}/>
+                    }
                 </div>
                 <div>
                     <div onClick={() => setCommentsOpen(!commentsOpen)}
@@ -56,6 +66,9 @@ const Post = ({post}:{post:PostResponseInterface}) => {
                         </motion.div>
                     }
                     </AnimatePresence>
+                </div>
+                <div>
+                    <Input id={"comment"} title={""} placeholder="Write a comment..."/>
                 </div>
             </div>
         </div>

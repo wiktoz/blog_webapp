@@ -47,7 +47,7 @@ const Navbar = () => {
 
     return (
         <nav className="flex flex-row justify-between px-6 py-2 bg-primary">
-            <div className="flex flex-row items-center gap-6">
+            <div className="flex flex-row items-center gap-2 md:gap-6">
                 <div className="m-2">
                     <Link href="/">
                         <Image src="/img/logo2.png" alt="logo" height={100} width={50}/>

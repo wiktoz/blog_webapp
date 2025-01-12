@@ -14,7 +14,7 @@ export default function RootLayout({children}: Readonly<{children: React.ReactNo
         <header>
           <Navbar/>
         </header>
-        <main className="m-8">
+        <main className="m-4">
           {children}
         </main>
       </body>
