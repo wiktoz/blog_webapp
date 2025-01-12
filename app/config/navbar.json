@@ -1,10 +1,6 @@
 {
     "links": [
         { 
-            "name": "Posts",
-            "url": "/posts"
-        },
-        { 
             "name": "Groups",
             "url": "/groups"
         }

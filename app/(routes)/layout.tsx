@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import "../globals.css"
 import Navbar from "@/app/components/Navbar"
+import { UserProvider } from "../context/UserContext"
 
 export const metadata: Metadata = {
   title: "Ania Gotuje",
@@ -11,12 +12,14 @@ export default function RootLayout({children}: Readonly<{children: React.ReactNo
   return (
     <html lang="en">
       <body className="bg-primary">
-        <header>
-          <Navbar/>
-        </header>
-        <main className="m-4">
-          {children}
-        </main>
+        <UserProvider>
+          <header>
+            <Navbar/>
+          </header>
+          <main className="m-4">
+            {children}
+          </main>
+        </UserProvider>
       </body>
     </html>
   );

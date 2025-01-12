@@ -20,3 +20,12 @@ interface CommentResponseInterface {
     user_id: string,
     username?: string
 }
+
+interface PostUploadInterface {
+    title: string,
+    content: string
+}
+
+interface RatingInterface {
+    average: number
+}

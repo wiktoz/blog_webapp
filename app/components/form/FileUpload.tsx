@@ -65,7 +65,7 @@ const FileUpload = ({title, files, setFiles, multiple}:FileUploadInterface) => {
                 }
             </div>
             <div {...getRootProps()} className={"hover:cursor-pointer flex flex-col gap-2 p-4 rounded-lg  shadow " +
-                (isDragActive ? "-dashed -gray-500 bg-primary" : "bg-[#fffbef]")}>
+                (isDragActive ? "-dashed -gray-500 bg-[#fffbef]" : "bg-primary")}>
                 <input {...getInputProps()} />
                 {
                     isDragActive ?

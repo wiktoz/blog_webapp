@@ -8,8 +8,8 @@ const GroupPage = async ({params}:{params: Promise<{id: string}>}) => {
     return(
         <div className="md:w-1/2 flex flex-col mx-auto gap-8">
             <GroupDetails groupId={id} />
+            <PostUpload groupId={id} />
 
-            <PostUpload/>
             <PostsList groupId={id} />
         </div>
     )
